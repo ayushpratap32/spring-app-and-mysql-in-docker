@@ -1,0 +1,27 @@
+version: "3"
+services:
+  spring-boot-app:
+    #not recommend container name when we are scaling
+    container_name: order-service-spring-container
+    image: order-service-spring-image
+    restart: always
+    build: .
+    ports:
+      - '8080:8080'
+    environment:
+      MYSQL_HOST: mysql-container
+      MYSQL_USER: sa
+      MYSQL_PASSWORD: password
+      MYSQL_PORT: 3306
+
+  mysqldb:
+    container_name: mysql-container
+    image: mysql:8
+    #external port:internal port
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_DATABASE: retail_db
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: sa
+      MYSQL_PASSWORD: password
